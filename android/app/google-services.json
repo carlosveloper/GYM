@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "185991402208",
+    "project_id": "gyms-83987",
+    "storage_bucket": "gyms-83987.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185991402208:android:3f6290adc8b2e46f23f685",
+        "android_client_info": {
+          "package_name": "com.carlosveloper.gimnasio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185991402208-v8g8l5a9ov0r0qo9ev2kos48nki1cl4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwG5IbxaEL05LELb4V36LvdSGc7Tww3Cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185991402208-v8g8l5a9ov0r0qo9ev2kos48nki1cl4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
