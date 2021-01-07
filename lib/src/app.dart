@@ -3,6 +3,7 @@ import 'package:gimnasio/src/config/colors.dart';
 import 'package:gimnasio/src/config/route_generator.dart';
 import 'package:gimnasio/src/provider/MyappProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -18,10 +19,24 @@ class App extends StatelessWidget {
     final provider = context.watch<MyAppProvider>();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Control',
+        title: 'Gym',
         onGenerateRoute: RouteGenerator.generateRoute,
         navigatorKey: provider.navigatorKey,
         initialRoute: "/",
+        builder: (context, widget) => ResponsiveWrapper.builder(
+              BouncingScrollWrapper.builder(context, widget),
+              maxWidth: MediaQuery.of(context).size.width,
+              minWidth: 450,
+              defaultScale: true,
+              debugLog: false,
+              breakpoints: [
+                ResponsiveBreakpoint.resize(450, name: MOBILE),
+                ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+                ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+                ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+              ],
+            ),
         //home: HomePage(),
         //initialRoute: "/",
         /* getPages: [

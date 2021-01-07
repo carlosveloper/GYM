@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static final Color primary = Color(0xffFFF5D8);
+  static final Color primary = Color(0xffCD9A27);
   static final Color second = Color(0xff7B7C80);
+  static Color tituloGold = Color(0xffD1942F);
+
+  static Color buttonBlueColors = Color(0xff2E4050);
 
   static final Color background = Color(0xffF4F5FA);
   static final Color buttonColor = Color(0xff23233C);

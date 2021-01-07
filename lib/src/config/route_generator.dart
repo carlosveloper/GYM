@@ -1,3 +1,4 @@
+import 'package:gimnasio/src/presentation/login/login_page.dart';
 import 'package:gimnasio/src/presentation/splash/splash.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => SplashPage());
+      case '/Login':
+        return MaterialPageRoute(builder: (_) => LoginPage.init());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

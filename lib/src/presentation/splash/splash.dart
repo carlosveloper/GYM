@@ -1,8 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:gimnasio/src/config/colors.dart';
 import 'package:gimnasio/src/provider/MyappProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+var tamanioLogo = kIsWeb ? 350.0 : 250.0;
+var posicion = kIsWeb ? 100.0 : 50.0;
+var division = kIsWeb ? 1.5 : 1.8;
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key key}) : super(key: key);
@@ -45,7 +50,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   void _setupSecondAnimations() {
     _animationControllerSignUp = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: 10),
     );
     _animationLogoOut = CurvedAnimation(
       parent: _animationControllerSignUp,
@@ -74,7 +79,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     final app = context.watch<MyAppProvider>();
     Future.delayed(const Duration(milliseconds: 6000), () async {
       print("voy a verificar");
-      app.loadData();
+      app.dirigirRuta("/Login");
     });
 
     return body(ancho);
@@ -93,7 +98,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                 child: Stack(
                   children: [
                     Positioned(
-                      top: MediaQuery.of(context).size.height / 1.5,
+                      top: MediaQuery.of(context).size.height / division,
                       left: 0,
                       right: 0,
                       child: Column(
@@ -112,7 +117,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                     ),
                     Positioned(
                       top: MediaQuery.of(context).size.height / 3 -
-                          50.0 * _animationLogoMovementUp.value,
+                          posicion * _animationLogoMovementUp.value,
                       left: 0,
                       right: 0,
                       child: Transform.scale(
@@ -120,9 +125,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                         child: Hero(
                           tag: "logoSplash",
                           child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 50.0),
-                            height: 300,
-                            width: 300,
+                            height: tamanioLogo,
+                            width: tamanioLogo,
                             child: Image.asset(
                               'assets/logo.png',
                               fit: BoxFit.contain,
@@ -140,19 +144,18 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   }
 
   Widget _footer(anchoPantalla) {
-    return Column(children: [
-      Text(
-        'Gimnasio  Belgica',
-        textAlign: TextAlign.center,
-        style: GoogleFonts.aBeeZee(
-          color: AppColors.second,
-          fontSize: 30,
-          decoration: TextDecoration.none,
+    return Column(
+      children: [
+        Text(
+          'Gym Belgica',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.aBeeZee(
+            color: AppColors.second,
+            fontSize: 40,
+            decoration: TextDecoration.none,
+          ),
         ),
-      ),
-      SizedBox(
-        height: 20,
-      ),
-    ]);
+      ],
+    );
   }
 }
