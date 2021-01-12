@@ -77,6 +77,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     var ancho = MediaQuery.of(context).size.width;
 
     final app = context.watch<MyAppProvider>();
+    app.loadData();
     Future.delayed(const Duration(milliseconds: 6000), () async {
       print("voy a verificar");
       app.dirigirRuta("/Login");
@@ -150,7 +151,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           'Gym Belgica',
           textAlign: TextAlign.center,
           style: GoogleFonts.aBeeZee(
-            color: AppColors.second,
+            color: AppColors.tituloGris,
             fontSize: 40,
             decoration: TextDecoration.none,
           ),

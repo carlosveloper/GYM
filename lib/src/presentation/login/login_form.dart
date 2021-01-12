@@ -51,10 +51,10 @@ class LoginForm extends StatelessWidget {
           ), */
           Text(
             "Gym Belgica",
-            style: TextStyle(
-              color: AppColors.tituloGold,
+            style: GoogleFonts.aBeeZee(
+              color: AppColors.tituloCafe,
               fontSize: 40,
-              fontWeight: FontWeight.w600,
+              decoration: TextDecoration.none,
             ),
           ),
           /* SizedBox(
@@ -81,7 +81,10 @@ class LoginForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 15),
               child: Text(
                 "Recupera la Contraseña",
-                style: TextStyle(fontSize: 20, color: AppColors.tituloGold),
+                style: GoogleFonts.aBeeZee(
+                  textStyle:
+                      TextStyle(fontSize: 20.0, color: AppColors.tituloCafe),
+                ),
                 // style: TextStyle(fontFamily: 'sans'),
               ),
               onPressed: onGoToForgotPassword,
@@ -116,13 +119,10 @@ class LoginForm extends StatelessWidget {
                 child: Text(
                   "Registrate",
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      // fontFamily: 'sans',
-                      color: AppColors.tituloGold,
-                      fontSize: 22
-
-                      //   fontWeight: FontWeight.w600,
-                      ),
+                  style: GoogleFonts.aBeeZee(
+                    textStyle:
+                        TextStyle(fontSize: 20.0, color: AppColors.tituloCafe),
+                  ),
                 ),
                 onPressed: onGoToResgister,
               )
@@ -251,7 +251,7 @@ class LoginForm extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 30),
           width: double.infinity,
           child: RaisedButton(
-            color: AppColors.buttonBlueColors,
+            color: AppColors.primary,
             textColor: Colors.white,
             elevation: 5.0,
             child: Wrap(

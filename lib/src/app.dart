@@ -46,10 +46,10 @@ class App extends StatelessWidget {
 
         theme: ThemeData(
           fontFamily: 'Poppins',
-          primaryColor: Colors.white,
+          primaryColor: AppColors.primary,
           brightness: Brightness.light,
           accentColor: AppColors().mainColor(1),
-          focusColor: AppColors().accentColor(1),
+          focusColor: AppColors().secondColor(1),
           hintColor: AppColors().secondColor(1),
           textTheme: TextTheme(
             button: TextStyle(color: Colors.white),

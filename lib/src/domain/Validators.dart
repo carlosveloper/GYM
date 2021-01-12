@@ -35,12 +35,12 @@ class Validators {
     }
   } */
 
-  final validarPlaca =
-      StreamTransformer<String, String>.fromHandlers(handleData: (placa, sink) {
-    if (placa.length == 7) {
-      sink.add(placa);
+  final validarDireccion = StreamTransformer<String, String>.fromHandlers(
+      handleData: (direccion, sink) {
+    if (direccion.length >= 5) {
+      sink.add(direccion);
     } else {
-      sink.addError('7 Caracteres');
+      sink.addError('Asegurate que la dirección sea válida');
     }
   });
 

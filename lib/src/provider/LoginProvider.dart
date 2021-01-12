@@ -55,7 +55,7 @@ class LoginProvider extends ApiRepositoryImpl with ChangeNotifier {
 
     responseLogin.fold(
         (l) => Utils.showInSnackBar(contextLogin, l.getMessageError()),
-        (data) => dirigirRuta("/Menu", arguments: data.user.email));
+        (data) => dirigirRuta("/Home", arguments: data.user.email));
   }
 
   dirigirRuta(ruta, {Object arguments}) {

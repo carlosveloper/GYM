@@ -2,6 +2,7 @@
     package="com.carlosveloper.gimnasio">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
+        android:name=".Application"
         android:label="gimnasio"
         android:icon="@mipmap/ic_launcher">
         <activity

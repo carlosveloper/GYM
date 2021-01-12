@@ -48,8 +48,8 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
                 gradient: LinearGradient(
                     colors: [
                   Color(0xffFCF3E8),
-                  Color(0xffCD9A27),
-                  Color(0xffAA7B29)
+                  Color(0xff024A71),
+                  Color(0xFF04526B)
                 ],
                     stops: [
                   0.01,

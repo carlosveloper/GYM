@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static final Color primary = Color(0xffCD9A27);
-  static final Color second = Color(0xff7B7C80);
+  static final Color primary = Color(0xff024A71);
+  static final Color second = Color(0xFF04526B);
   static Color tituloGold = Color(0xffD1942F);
+  static Color tituloGris = Color(0xffdddddd);
+  static Color tituloCafe = Color(0xff4F4949);
 
   static Color buttonBlueColors = Color(0xff2E4050);
 
   static final Color background = Color(0xffF4F5FA);
   static final Color buttonColor = Color(0xff23233C);
   static final Color blancoHueso = Color(0xffE1E5E5);
-
-  //Tareas
-  static final Color colorSoporte = Color(0xffF44336);
-  static final Color colorInstalacion = Color(0xff4CAF50);
-  static final Color colorRetiro = Color(0xffffc107);
-  static final Color colorInterdepartamental = Color(0xff3f51b5);
 
   Color _mainColor = Color(0xff024A71);
   Color _mainDarkColor = Color(0xFF22B7CE);
