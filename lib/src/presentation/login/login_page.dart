@@ -64,8 +64,11 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
               builder: (_, Orientation orientation) {
                 if (orientation == Orientation.portrait) {
                   return LoginPageMobile();
-                } else {
+                } else if (orientation == Orientation.landscape &&
+                    MediaQuery.of(context).size.width > 500) {
                   return LoginPageWeb();
+                } else {
+                  return LoginPageMobile();
                 }
               },
             ),

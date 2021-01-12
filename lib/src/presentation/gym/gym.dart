@@ -26,7 +26,7 @@ class GymPage extends StatelessWidget {
               duration: "",
               title: "Gym Belgica",
               image:
-                  "https://gimnasiotaurus.com/wp-content/uploads/2019/07/FACHADA-TAURUS-JOYA-min.jpg",
+                  "https://www.palco23.com/files/0002017/000redaccion/fitness/energie-fitness-948.jpg",
             ),
           ),
           SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gimnasio/src/config/ui_icons.dart';
 import 'package:gimnasio/src/presentation/common/avatar.dart';
 import 'package:gimnasio/src/provider/HomeProvider.dart';
 
@@ -55,7 +56,7 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             dense: true,
             title: Text(
-              "Trabajo",
+              "Menú",
               style: Theme.of(context).textTheme.bodyText2,
             ),
             trailing: Icon(
@@ -68,14 +69,14 @@ class DrawerWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/RegistroUser', arguments: 0);
             },
             leading: Icon(
-              Icons.ac_unit,
+              UiIcons.user,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
               "Registro Usuario",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            trailing: Chip(
+            /*  trailing: Chip(
               padding: EdgeInsets.symmetric(horizontal: 5),
               backgroundColor: Colors.transparent,
               shape: StadiumBorder(
@@ -84,18 +85,18 @@ class DrawerWidget extends StatelessWidget {
                 '10',
                 style: TextStyle(color: Theme.of(context).focusColor),
               ),
-            ),
+            ), */
           ),
           ListTile(
             onTap: () {
               Navigator.of(context).pushNamed('/Maps');
             },
             leading: Icon(
-              Icons.ac_unit,
+              UiIcons.drug,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              "Mis estadisticas",
+              "Datos Medicos",
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -104,11 +105,11 @@ class DrawerWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/Tabs', arguments: 2);
             },
             leading: Icon(
-              Icons.ac_unit,
+              UiIcons.zoom_in,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              "Eventos",
+              "Historial",
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -117,7 +118,7 @@ class DrawerWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/Tabs', arguments: 0);
             },
             leading: Icon(
-              Icons.ac_unit,
+              UiIcons.user_1,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
@@ -130,11 +131,11 @@ class DrawerWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/Orders', arguments: 0);
             },
             leading: Icon(
-              Icons.ac_unit,
+              UiIcons.bell,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              "Notificaciones",
+              "Notificaciones Plan",
               style: Theme.of(context).textTheme.subtitle1,
             ),
             trailing: Chip(
@@ -151,48 +152,11 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             dense: true,
             title: Text(
-              "Utilidades",
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            trailing: Icon(
-              Icons.remove_red_eye,
-              color: Theme.of(context).focusColor.withOpacity(0.3),
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Brands');
-            },
-            leading: Icon(
-              Icons.ac_unit,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Tracking",
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Brands');
-            },
-            leading: Icon(
-              Icons.ac_unit,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Mensajes",
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
-          ListTile(
-            dense: true,
-            title: Text(
               "Preferencias de Aplicación",
               style: Theme.of(context).textTheme.bodyText2,
             ),
             trailing: Icon(
-              Icons.ac_unit,
+              UiIcons.settings_1,
               //color: Theme.of(context).focusColor.withOpacity(0.3),
             ),
           ),
@@ -201,7 +165,7 @@ class DrawerWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/Help');
             },
             leading: Icon(
-              Icons.ac_unit,
+              UiIcons.settings_2,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
@@ -214,7 +178,7 @@ class DrawerWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/Tabs', arguments: 1);
             },
             leading: Icon(
-              Icons.ac_unit,
+              UiIcons.settings,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
@@ -241,7 +205,7 @@ class DrawerWidget extends StatelessWidget {
               print('debo salir de sesion');
             },
             leading: Icon(
-              Icons.ac_unit,
+              Icons.close,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
