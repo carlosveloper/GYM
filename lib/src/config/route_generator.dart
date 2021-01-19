@@ -17,7 +17,7 @@ class RouteGenerator {
       case '/Home':
         return MaterialPageRoute(builder: (_) => HomePage.init());
       case '/RegistroUser':
-        return MaterialPageRoute(builder: (_) => RegistroUser());
+        return MaterialPageRoute(builder: (_) => RegistroUser.init());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

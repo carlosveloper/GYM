@@ -27,7 +27,7 @@ class _TabBarHomeState extends State<TabBarHome> {
       backgroundColor: Colors.transparent,
       selectedIconTheme: IconThemeData(size: 25),
       unselectedItemColor: Theme.of(context).hintColor.withOpacity(1),
-      currentIndex: 2,
+      currentIndex: 4,
       onTap: (int i) {
         //this._selectTab(i);
         appHome.changeSelect(i);
@@ -73,7 +73,7 @@ class _TabBarHomeState extends State<TabBarHome> {
               ],
             ),
             child: new Icon(
-              Icons.ac_unit,
+              UiIcons.credit_card,
               color: Colors.white,
               size: sizeIcons,
             ),

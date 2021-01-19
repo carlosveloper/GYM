@@ -52,7 +52,7 @@ class ImageCardWithInternal extends StatelessWidget {
       padding: EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(this.image),
+          image: AssetImage(this.image),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.all(

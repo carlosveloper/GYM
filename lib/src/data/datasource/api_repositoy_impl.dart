@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
+import 'package:gimnasio/src/domain/model/Routine.dart';
 import 'package:gimnasio/src/domain/model/User.dart';
 import 'package:gimnasio/src/domain/repository/api_repository.dart';
 
@@ -31,18 +32,12 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
       await FirebaseFirestore.instance
           .collection("usuarios")
           .doc(user.correo)
-          .set(user.toMap())
-          .then((_) {
-        print("registrado!");
-        return Right(true);
-      }).catchError((onError) {
-        return Left(ServerFailure(message: onError.toString()));
-      });
+          .set(user.toMap());
+      print("registrado!");
+      return Right(true);
     } on FirebaseAuthException catch (e) {
       return Left(ServerFailure(message: e.code));
     }
-
-    return Right(false);
   }
 
   @override
@@ -142,5 +137,21 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
     });
 
     print("reviso---->");
+  }
+
+  @override
+  Future<Either<Failure, List<Routine>>> getAllRoutine() async {
+    List<Routine> routine = [];
+    try {
+      QuerySnapshot value =
+          await FirebaseFirestore.instance.collection("ejercicios").get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        routine.add(Routine.fromMap(val.data()));
+      }
+      return Right(routine);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
   }
 }

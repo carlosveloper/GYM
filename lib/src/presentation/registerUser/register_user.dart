@@ -5,11 +5,20 @@ import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gimnasio/src/bloc/register_datos_bloc.dart';
 import 'package:gimnasio/src/config/colors.dart';
+import 'package:gimnasio/src/domain/Utils.dart';
+import 'package:gimnasio/src/provider/RegistroUserProvider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class RegistroUser extends StatefulWidget {
-  RegistroUser({Key key}) : super(key: key);
+  RegistroUser._();
+
+  static ChangeNotifierProvider init() =>
+      ChangeNotifierProvider<RegistroUserProvider>(
+        create: (_) => RegistroUserProvider(),
+        builder: (_, __) => new RegistroUser._(),
+      );
 
   @override
   _RegistroUserState createState() => _RegistroUserState();
@@ -20,6 +29,7 @@ class _RegistroUserState extends State<RegistroUser> {
   RegisterBloc bloc = RegisterBloc();
   Country _selected = Country.EC;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  RegistroUserProvider appUser = null;
 
   @override
   void initState() {
@@ -36,6 +46,8 @@ class _RegistroUserState extends State<RegistroUser> {
 
   @override
   Widget build(BuildContext context) {
+    appUser = context.watch<RegistroUserProvider>();
+
     return Scaffold(
       backgroundColor: AppColors.primary,
       key: _scaffoldKey,
@@ -72,26 +84,31 @@ class _RegistroUserState extends State<RegistroUser> {
                               _showChoiceDialog(context);
                               // Navigator.of(context).pop();
                             },
-                            child: Center(
-                              child: imagenPerfil == null
-                                  ? Container(
-                                      width: 125.0,
-                                      height: 125.0,
-                                      decoration: new BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: new DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: NetworkImage(
-                                                "https://www.logodesignoutlet.com/images/tony.png",
-                                              ))))
-                                  : Container(
-                                      width: 125.0,
-                                      height: 125.0,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: FileImage(imagenPerfil)))),
+                            child: Container(
+                              height: double.infinity,
+                              margin: EdgeInsets.only(bottom: 15),
+                              child: Center(
+                                child: imagenPerfil == null
+                                    ? Container(
+                                        width: 125.0,
+                                        height: 125.0,
+                                        decoration: new BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: new DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: NetworkImage(
+                                                  "https://thumbs.dreamstime.com/b/hombre-con-pesas-de-gimnasia-gr%C3%A1fico-del-avatar-de-la-historieta-73242601.jpg",
+                                                ))))
+                                    : Container(
+                                        width: 125.0,
+                                        height: 125.0,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image:
+                                                    FileImage(imagenPerfil)))),
+                              ),
                             ),
                           ),
                         ),
@@ -369,7 +386,12 @@ class _RegistroUserState extends State<RegistroUser> {
               ],
             ),
             onPressed: () {
-              // if (snapshot.hasData)
+              if (snapshot.hasData && imagenPerfil != null) {
+                appUser.register(bloc, imagenPerfil);
+              } else {
+                Utils.showInSnackBar(
+                    context, "Todos los Campos son Requeridos");
+              }
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0)),
