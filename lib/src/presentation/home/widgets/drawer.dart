@@ -115,14 +115,14 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 0);
+              Navigator.of(context).pushNamed('/Users', arguments: 0);
             },
             leading: Icon(
               UiIcons.user_1,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              "Perfil",
+              "Usuarios",
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),

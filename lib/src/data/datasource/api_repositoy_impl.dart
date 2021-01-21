@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
 import 'package:gimnasio/src/domain/model/Routine.dart';
@@ -27,6 +30,26 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
   }
 
   @override
+  Future<Either<Failure, bool>> registerCredentials(Usuario user) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: user.correo, password: user.correo);
+
+      return Right(true);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+      return Left(ServerFailure(message: e.code));
+    } catch (e) {
+      print(e);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> registerUser(Usuario user) async {
     try {
       await FirebaseFirestore.instance
@@ -36,6 +59,26 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
       print("registrado!");
       return Right(true);
     } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadImageProfile(
+      File imageToUpload, String title) async {
+    try {
+      var imageFileName =
+          title + DateTime.now().millisecondsSinceEpoch.toString();
+      Reference reference = FirebaseStorage.instance.ref();
+      await reference
+          .child("perfiles/usuarios/" + imageFileName)
+          .putFile(imageToUpload);
+
+      String downloadURL = await FirebaseStorage.instance
+          .ref("perfiles/usuarios/" + imageFileName)
+          .getDownloadURL();
+      return Right(downloadURL);
+    } on FirebaseException catch (e) {
       return Left(ServerFailure(message: e.code));
     }
   }

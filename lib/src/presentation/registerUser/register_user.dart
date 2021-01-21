@@ -47,7 +47,7 @@ class _RegistroUserState extends State<RegistroUser> {
   @override
   Widget build(BuildContext context) {
     appUser = context.watch<RegistroUserProvider>();
-
+    appUser.load(context);
     return Scaffold(
       backgroundColor: AppColors.primary,
       key: _scaffoldKey,
