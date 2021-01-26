@@ -7,5 +7,6 @@ import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService
 
 class MainActivity: FlutterActivity(){
-       
+
+
 }
