@@ -1,5 +1,7 @@
+import 'package:gimnasio/src/presentation/cardTag/card_tag.dart';
 import 'package:gimnasio/src/presentation/home/home.dart';
 import 'package:gimnasio/src/presentation/login/login_page.dart';
+import 'package:gimnasio/src/presentation/recargaTag/recargaCard_tag.dart';
 import 'package:gimnasio/src/presentation/registerUser/register_user.dart';
 import 'package:gimnasio/src/presentation/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RegistroUser.init());
       case '/Users':
         return MaterialPageRoute(builder: (_) => UsersPage());
+      case '/CardTags':
+        return MaterialPageRoute(builder: (_) => CardTagPage());
+      case '/RecargaTags':
+        return MaterialPageRoute(builder: (_) => RecargaTagPage.init());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

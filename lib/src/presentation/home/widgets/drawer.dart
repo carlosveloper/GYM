@@ -29,10 +29,12 @@ class DrawerWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6,
                     )
                   : null,
-              accountEmail: Text(
-                appHome.user?.correo,
-                style: Theme.of(context).textTheme.caption,
-              ),
+              accountEmail: appHome.user != null
+                  ? Text(
+                      appHome.user?.correo,
+                      style: Theme.of(context).textTheme.caption,
+                    )
+                  : null,
               currentAccountPicture: appHome.user != null
                   ? MyAvatar(
                       size: 125,
@@ -97,6 +99,32 @@ class DrawerWidget extends StatelessWidget {
             ),
             title: Text(
               "Datos Medicos",
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed('/CardTags', arguments: 2);
+            },
+            leading: Icon(
+              UiIcons.credit_card,
+              color: Theme.of(context).focusColor.withOpacity(1),
+            ),
+            title: Text(
+              "Mis Tarjetas",
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed('/RecargaTags', arguments: 2);
+            },
+            leading: Icon(
+              UiIcons.credit_card,
+              color: Theme.of(context).focusColor.withOpacity(1),
+            ),
+            title: Text(
+              "Planes y Recargas",
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),

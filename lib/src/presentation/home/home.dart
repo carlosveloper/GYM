@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  HomeProvider appHome = null;
+  HomeProvider appHome;
   bool _isInitialized; //This is the key
 
   @override

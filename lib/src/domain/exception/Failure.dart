@@ -18,9 +18,7 @@ class ServerFailure implements Failure {
   });
 
   @override
-  void excute() {
-    // TODO: implement excute
-  }
+  void excute() {}
 
   Map<String, dynamic> toMap() {
     return {

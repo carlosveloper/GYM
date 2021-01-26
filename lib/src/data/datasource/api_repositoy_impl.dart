@@ -7,8 +7,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
+import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/domain/model/Routine.dart';
 import 'package:gimnasio/src/domain/model/User.dart';
+import 'package:gimnasio/src/domain/model/cardTag.dart';
 import 'package:gimnasio/src/domain/repository/api_repository.dart';
 
 class ApiRepositoryImpl implements ApiRepositoryInterface {
@@ -192,6 +194,38 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
         routine.add(Routine.fromMap(val.data()));
       }
       return Right(routine);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CardTag>>> getAllCardTag() async {
+    List<CardTag> tarjetas = [];
+    try {
+      QuerySnapshot value =
+          await FirebaseFirestore.instance.collection("tarjetas").get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        tarjetas.add(CardTag.fromMap(val.data()));
+      }
+      return Right(tarjetas);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<RecargaTag>>> getAllRecargasCardTag() async {
+    List<RecargaTag> tarjetas = [];
+    try {
+      QuerySnapshot value =
+          await FirebaseFirestore.instance.collection("recargotarjeta").get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        tarjetas.add(RecargaTag.fromMap(val.data()));
+      }
+      return Right(tarjetas);
     } on FirebaseAuthException catch (e) {
       print("falle---" + e.code);
       return Left(ServerFailure(message: e.code));

@@ -30,4 +30,27 @@ class Utils {
           ),
     );
   }
+/* 
+  import 'package:intl/intl.dart';
+
+    DateTime convertTimeStampToDateTime(int timeStamp) {
+     var dateToTimeStamp = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+     return dateToTimeStamp;
+   }
+
+  String convertTimeStampToHumanDate(int timeStamp) {
+    var dateToTimeStamp = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+    return DateFormat('dd/MM/yyyy').format(dateToTimeStamp);
+  }
+
+   String convertTimeStampToHumanHour(int timeStamp) {
+     var dateToTimeStamp = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+     return DateFormat('HH:mm').format(dateToTimeStamp);
+   }
+
+   int constructDateAndHourRdvToTimeStamp(DateTime dateTime, TimeOfDay time ) {
+     final constructDateTimeRdv = dateTimeToTimeStamp(DateTime(dateTime.year, dateTime.month, dateTime.day, time.hour, time.minute)) ;
+     return constructDateTimeRdv;
+   } */
+
 }
