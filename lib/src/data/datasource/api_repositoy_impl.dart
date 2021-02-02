@@ -6,11 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
+import 'package:gimnasio/src/domain/model/CardTag.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
 import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/domain/model/Routine.dart';
 import 'package:gimnasio/src/domain/model/User.dart';
-import 'package:gimnasio/src/domain/model/cardTag.dart';
 import 'package:gimnasio/src/domain/repository/api_repository.dart';
 
 class ApiRepositoryImpl implements ApiRepositoryInterface {
@@ -221,11 +221,77 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
     List<RecargaTag> tarjetas = [];
     try {
       QuerySnapshot value =
-          await FirebaseFirestore.instance.collection("recargotarjeta").get();
+          await FirebaseFirestore.instance.collection("recargatarjeta").get();
       for (QueryDocumentSnapshot val in value.docs) {
         tarjetas.add(RecargaTag.fromMap(val.data()));
       }
       return Right(tarjetas);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Usuario>>> getAllUsers() async {
+    List<Usuario> usuarios = [];
+    try {
+      QuerySnapshot value =
+          await FirebaseFirestore.instance.collection("usuarios").get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        usuarios.add(Usuario.fromMap(val.data()));
+      }
+      return Right(usuarios);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> updateUserCardTag(
+      String idDocumento, String correo, String estado) async {
+    try {
+      FirebaseFirestore.instance
+          .collection("tarjetas")
+          .doc(idDocumento)
+          .update({'usuario': correo, 'estado': estado});
+      return Right(true);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> registerRecargasCardTag(String codTag) async {
+    try {
+      RecargaTag nuevo = RecargaTag(
+          codigoTag: codTag,
+          plan: false,
+          valor: 0.0,
+          fechaInicio: Timestamp.now(),
+          fechaFin: Timestamp.now());
+
+      await FirebaseFirestore.instance
+          .collection("recargatarjeta")
+          .doc(codTag)
+          .set(nuevo.toMap());
+      print("registrado!");
+      return Right(true);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> updateRecargaTag(RecargaTag recarga) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("recargatarjeta")
+          .doc(recarga.codigoTag)
+          .update(recarga.toMap());
+      return Right(true);
     } on FirebaseAuthException catch (e) {
       print("falle---" + e.code);
       return Left(ServerFailure(message: e.code));

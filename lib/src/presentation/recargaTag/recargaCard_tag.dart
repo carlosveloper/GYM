@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gimnasio/src/config/colors.dart';
+import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/presentation/recargaTag/widgets/item_recargaCard.dart';
 import 'package:gimnasio/src/provider/RecargaCardTagProvider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +17,8 @@ class RecargaTagPage extends StatelessWidget {
         builder: (_, __) => new RecargaTagPage._(),
       );
   RecargaCardTagProvider appTarjeta;
+
+  List<RecargaTag> _tarjetas = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +43,31 @@ class RecargaTagPage extends StatelessWidget {
                     fontWeight: FontWeight.bold)),
           ),
         ),
-        body: Container(
-          child: appTarjeta.tarjetas.length > 0
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: appTarjeta.tarjetas.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        margin: EdgeInsets.only(bottom: 12),
-                        child: ItemRecargaCardTag(
-                          miTarjeta: appTarjeta.tarjetas[index],
-                        ));
-                    // itemNutrition(nutrition[index]));
-                    //
-                  })
-              : Container(
-                  child: Center(
-                    child: Text("No existe registro de planes o recargas"),
-                  ),
-                ),
-        ));
+        body: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("recargatarjeta")
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                    child: new Text("No existe registro de ninguna Tarjeta "));
+              else {
+                var list = snapshot.data.docs;
+                _tarjetas.clear();
+                for (var doc in list) {
+                  print(doc.data);
+                  RecargaTag tarjeta = RecargaTag.fromMap(doc.data());
+                  _tarjetas.add(tarjeta);
+                }
+                return ListView.builder(
+                    itemCount: _tarjetas.length,
+                    itemBuilder: (context, i) {
+                      return ItemRecargaCardTag(
+                        miTarjeta: _tarjetas[i],
+                      );
+                    });
+              }
+            }));
   }
 }

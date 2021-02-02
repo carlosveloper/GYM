@@ -24,7 +24,7 @@ class RouteGenerator {
       case '/Users':
         return MaterialPageRoute(builder: (_) => UsersPage());
       case '/CardTags':
-        return MaterialPageRoute(builder: (_) => CardTagPage());
+        return MaterialPageRoute(builder: (_) => CardTagPage.init());
       case '/RecargaTags':
         return MaterialPageRoute(builder: (_) => RecargaTagPage.init());
 

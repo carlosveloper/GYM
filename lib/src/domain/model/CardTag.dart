@@ -6,6 +6,7 @@ class CardTag {
   String estado;
   String usuario;
   bool isOcupado;
+  String idDocumento;
 
   CardTag({
     this.codigoTag,
@@ -13,6 +14,7 @@ class CardTag {
     this.estado,
     this.usuario,
     this.isOcupado = false,
+    this.idDocumento = "",
   });
 
   Map<String, dynamic> toMap() {

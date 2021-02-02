@@ -64,6 +64,14 @@ class Usuario {
 
   factory Usuario.fromJson(String source) =>
       Usuario.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return '$nombres'.toLowerCase() +
+        ' $apellidos'.toLowerCase() +
+        ' $cedula'.toLowerCase() +
+        ' $correo'.toLowerCase();
+  }
 }
 
 DateTime dateTimeFromTimestamp(dynamic val) {
