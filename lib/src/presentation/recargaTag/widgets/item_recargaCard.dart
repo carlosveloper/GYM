@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gimnasio/src/config/colors.dart';
 import 'package:gimnasio/src/domain/Formato.dart';
@@ -9,7 +10,6 @@ import 'package:gimnasio/src/provider/RecargaCardTagProvider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class ItemRecargaCardTag extends StatefulWidget {
   final RecargaTag miTarjeta;
@@ -24,7 +24,26 @@ class _ItemRecargaCardTagState extends State<ItemRecargaCardTag> {
   List<String> plan = ["Recarga", "Plan"];
   String itemSeleccionado;
   String nuevoValor;
+  String fechaInicio = "Fecha Inicio";
+  String fechaFin = "Fecha Fin";
   bool cancelar = false;
+  DateTime inicio, fin;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.miTarjeta.plan) {
+      inicio = widget.miTarjeta.fechaInicio.toDate();
+      fin = widget.miTarjeta.fechaFin.toDate();
+      String formattedDate = DateFormat('dd/MM/yyyy').format(inicio);
+
+      fechaInicio = formattedDate.toString();
+      formattedDate = DateFormat('dd/MM/yyyy').format(fin);
+      fechaFin = formattedDate.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     RecargaCardTagProvider appCardTag = context.watch<RecargaCardTagProvider>();
@@ -86,6 +105,9 @@ class _ItemRecargaCardTagState extends State<ItemRecargaCardTag> {
                   GestureDetector(
                     onTap: () {
                       showDialogPresentar(context, appCardTag);
+                    },
+                    onDoubleTap: () {
+                      showDialogPresentar(context, appCardTag, plan: true);
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -168,139 +190,190 @@ class _ItemRecargaCardTagState extends State<ItemRecargaCardTag> {
     return DateFormat('dd/MM/yyyy').format(dateToTimeStamp);
   }
 
-  Future<void> showDialogPresentar(
-      context, RecargaCardTagProvider appCardTag) async {
+  Future<void> showDialogPresentar(context, RecargaCardTagProvider appCardTag,
+      {bool plan = false}) async {
     Usuario user =
         appCardTag.buscarUsuarioPorCodTag(widget.miTarjeta.codigoTag);
     showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (BuildContext context) {
-        return Center(
-          child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10.0),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.white,
-              ),
-              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                Text(
-                  "Tarjeta Asignada ",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900,
-                    decoration: TextDecoration.none,
-                    color: Colors.black,
+      builder: (_) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Center(
+              child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10.0),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ItemUsuario(
-                  user: user,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                /*   Row(
-                  children: [
-                    Expanded(
-                      child: Material(
-                        child: SearchableDropdown(
-                          hint: Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'Seleccione el tipo de Activación',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          items: plan.map((item) {
-                            return new DropdownMenuItem<String>(
-                              child: Container(
-                                width: double.infinity,
-                                child: Text(
-                                  item,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                              value: item,
-                            );
-                          }).toList(),
-                          isExpanded: true,
-                          value: itemSeleccionado,
-                          isCaseSensitiveSearch: true,
-                          searchHint: new Text(
-                            'Seleccione el tipo de Recarga',
-                            style: new TextStyle(fontSize: 20),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              itemSeleccionado = value;
-                            });
-                          },
-                        ),
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    Text(
+                      "Tarjeta Asignada ",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        decoration: TextDecoration.none,
+                        color: Colors.black,
                       ),
                     ),
-                  ],
-                ),
-                if (itemSeleccionado != null &&
-                    itemSeleccionado == "Recarga") ...{
-                  editValue(),
-                }, */
-                editValue(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    ItemUsuario(
+                      user: user,
+                    ),
                     SizedBox(
                       width: 5,
                     ),
-                    Expanded(
-                      child: FlatButton(
-                          color: Colors.red,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0)),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "Cancelar",
-                            style: TextStyle(
-                              fontSize: 18,
-                              decoration: TextDecoration.none,
-                              color: Colors.white,
+                    if (!plan) ...{
+                      editValue(),
+                    },
+                    if (plan) ...{
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            SizedBox(
+                              width: 5,
                             ),
-                          )),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      child: FlatButton(
-                          color: Colors.green,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0)),
-                          onPressed: () {
-                            appCardTag.recargar(nuevoValor, widget.miTarjeta);
-                          },
-                          child: Text(
-                            "Confirmar",
-                            style: TextStyle(
-                              fontSize: 18,
-                              decoration: TextDecoration.none,
-                              color: Colors.white,
+                            Expanded(
+                              child: FlatButton(
+                                  color: AppColors.tituloGris,
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(10.0)),
+                                  onPressed: () async {
+                                    inicio = await calendar();
+
+                                    if (inicio != null) {
+                                      setState(() {
+                                        String formattedDate =
+                                            DateFormat('dd/MM/yyyy')
+                                                .format(inicio);
+                                        fechaInicio = formattedDate.toString();
+                                      });
+                                    }
+                                  },
+                                  child: Text(
+                                    fechaInicio,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      decoration: TextDecoration.none,
+                                      color: Colors.white,
+                                    ),
+                                  )),
                             ),
-                          )),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              child: FlatButton(
+                                  color: AppColors.tituloGris,
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(10.0)),
+                                  onPressed: () async {
+                                    fin = await calendar();
+                                    if (fin != null) {
+                                      setState(() {
+                                        String formattedDate =
+                                            DateFormat('dd/MM/yyyy')
+                                                .format(fin);
+                                        fechaFin = formattedDate.toString();
+                                      });
+                                    }
+                                  },
+                                  child: Text(
+                                    fechaFin,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      decoration: TextDecoration.none,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: FlatButton(
+                              color: Colors.red,
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius:
+                                      new BorderRadius.circular(10.0)),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  decoration: TextDecoration.none,
+                                  color: Colors.white,
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: FlatButton(
+                              color: Colors.green,
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius:
+                                      new BorderRadius.circular(10.0)),
+                              onPressed: () {
+                                if (plan) {
+                                  RecargaTag nuevo = widget.miTarjeta;
+                                  if (inicio != null) {
+                                    nuevo.fechaInicio =
+                                        Timestamp.fromDate(inicio);
+                                  }
+                                  if (fin != null) {
+                                    nuevo.fechaFin = Timestamp.fromDate(fin);
+                                  }
+                                  nuevo.plan = true;
+                                  appCardTag.recargar(
+                                      "0.0", widget.miTarjeta, context);
+                                } else {
+                                  appCardTag.recargar(
+                                      nuevoValor, widget.miTarjeta, context);
+                                }
+                              },
+                              child: Text(
+                                "Confirmar",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  decoration: TextDecoration.none,
+                                  color: Colors.white,
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                  ],
-                ),
-              ])),
+                  ])),
+            );
+          },
         );
       },
     );
@@ -330,5 +403,34 @@ class _ItemRecargaCardTagState extends State<ItemRecargaCardTag> {
         ),
       ),
     );
+  }
+
+  Future<DateTime> calendar() async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 356)),
+      builder: (context, child) {
+        return Center(child: child);
+
+        /* Center(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Container(
+                  height: 450,
+                  width: 700,
+                  child: child,
+                ),
+              ),
+            ],
+          ),
+        ); */
+      },
+    );
+
+    return picked;
   }
 }

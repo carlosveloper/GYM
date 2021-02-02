@@ -13,7 +13,7 @@ class RecargaTagPage extends StatelessWidget {
 
   static ChangeNotifierProvider init() =>
       ChangeNotifierProvider<RecargaCardTagProvider>(
-        create: (_) => RecargaCardTagProvider(),
+        create: (_) => RecargaCardTagProvider()..load(),
         builder: (_, __) => new RecargaTagPage._(),
       );
   RecargaCardTagProvider appTarjeta;
@@ -23,14 +23,6 @@ class RecargaTagPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     appTarjeta = context.watch<RecargaCardTagProvider>();
-
-    if (appTarjeta.isInitialized == null || !appTarjeta.isInitialized) {
-      // Only execute once
-      appTarjeta.load(context);
-      // appHome.cargarParametrosGenerales();
-      appTarjeta.isInitialized =
-          true; // Set this to true to prevent next execution using "if()" at this root block
-    }
 
     return Scaffold(
         appBar: AppBar(
@@ -45,7 +37,7 @@ class RecargaTagPage extends StatelessWidget {
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-                .collection("recargatarjeta")
+                .collection("recargotarjeta")
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

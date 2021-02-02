@@ -10,11 +10,7 @@ class RecargaCardTagProvider extends ApiRepositoryImpl with ChangeNotifier {
   List<Usuario> misUsuarios = [];
   List<CardTag> tarjetasUsuarios = [];
 
-  var contextRecarga;
-  bool isInitialized = false;
-
-  load(context) async {
-    contextRecarga = context;
+  load() async {
     //  Text(timeago.format(DateTime.tryParse(timestamp.toDate().toString())).toString());
 
     var responseCard = await getAllCardTag();
@@ -26,7 +22,6 @@ class RecargaCardTagProvider extends ApiRepositoryImpl with ChangeNotifier {
     responseRecargas.fold((l) => print("fail" + l.getMessageError()), (data) {
       tarjetas = data;
       print("Traje las recargas");
-      notifyListeners();
     });
 
     var responseUsers = await getAllUsers();
@@ -46,15 +41,16 @@ class RecargaCardTagProvider extends ApiRepositoryImpl with ChangeNotifier {
     return tarjetasUsuarios.firstWhere((cod) => cod.codigoTag == codigoTag);
   }
 
-  recargar(String valor, RecargaTag recargaTag) async {
-    Navigator.of(contextRecarga).pop();
-    ProgressDialog dialog = ProgressDialog(contextRecarga);
+  recargar(String valor, RecargaTag recargaTag, var context) async {
+    Navigator.of(context).pop();
+    /* ProgressDialog dialog = ProgressDialog(context);
     dialog.show();
+          dialog.dismiss(); */
+
     var recarga = double.parse(valor);
     recargaTag.valor = recarga + recargaTag.valor;
     var responseUpdate = await updateRecargaTag(recargaTag);
     responseUpdate.fold(
         (l) => print("fail" + l.getMessageError()), (data) async {});
-    dialog.dismiss();
   }
 }

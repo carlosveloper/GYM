@@ -221,7 +221,7 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
     List<RecargaTag> tarjetas = [];
     try {
       QuerySnapshot value =
-          await FirebaseFirestore.instance.collection("recargatarjeta").get();
+          await FirebaseFirestore.instance.collection("recargotarjeta").get();
       for (QueryDocumentSnapshot val in value.docs) {
         tarjetas.add(RecargaTag.fromMap(val.data()));
       }
@@ -274,7 +274,7 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
           fechaFin: Timestamp.now());
 
       await FirebaseFirestore.instance
-          .collection("recargatarjeta")
+          .collection("recargotarjeta")
           .doc(codTag)
           .set(nuevo.toMap());
       print("registrado!");
@@ -288,7 +288,7 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
   Future<Either<Failure, bool>> updateRecargaTag(RecargaTag recarga) async {
     try {
       await FirebaseFirestore.instance
-          .collection("recargatarjeta")
+          .collection("recargotarjeta")
           .doc(recarga.codigoTag)
           .update(recarga.toMap());
       return Right(true);

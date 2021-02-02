@@ -270,35 +270,6 @@ class _ItemCardTagState extends State<ItemCardTag> {
     );
   }
 
-  Future<DateTime> calendar() async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 356)),
-      builder: (context, child) {
-        return Center(child: child);
-
-        /* Center(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: Container(
-                  height: 450,
-                  width: 700,
-                  child: child,
-                ),
-              ),
-            ],
-          ),
-        ); */
-      },
-    );
-
-    return picked;
-  }
-
   Future<void> showDialogPresentar(
       context, String idTag, CardTagProvider appCardTag) async {
     Usuario user = appCardTag.buscarUsuario(widget.miTarjeta.usuario);
