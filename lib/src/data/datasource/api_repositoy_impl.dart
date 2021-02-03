@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
 import 'package:gimnasio/src/domain/model/CardTag.dart';
+import 'package:gimnasio/src/domain/model/HistorialTag.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
 import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/domain/model/Routine.dart';
@@ -292,6 +293,22 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
           .doc(recarga.codigoTag)
           .update(recarga.toMap());
       return Right(true);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HistorialTag>>> getAllHistorialTag() async {
+    List<HistorialTag> historial = [];
+    try {
+      QuerySnapshot value =
+          await FirebaseFirestore.instance.collection("historial").get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        historial.add(HistorialTag.fromMap(val.data()));
+      }
+      return Right(historial);
     } on FirebaseAuthException catch (e) {
       print("falle---" + e.code);
       return Left(ServerFailure(message: e.code));

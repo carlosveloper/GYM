@@ -130,7 +130,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 2);
+              Navigator.of(context).pushNamed('/Historial', arguments: 2);
             },
             leading: Icon(
               UiIcons.zoom_in,

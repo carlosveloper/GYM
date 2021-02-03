@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
 import 'package:gimnasio/src/domain/model/CardTag.dart';
+import 'package:gimnasio/src/domain/model/HistorialTag.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
 import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/domain/model/Routine.dart';
@@ -36,4 +37,6 @@ abstract class ApiRepositoryInterface {
   Future<Either<Failure, bool>> registerRecargasCardTag(String codTag);
 
   Future<Either<Failure, bool>> updateRecargaTag(RecargaTag recarga);
+
+  Future<Either<Failure, List<HistorialTag>>> getAllHistorialTag();
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gimnasio/src/data/datasource/api_repositoy_impl.dart';
-import 'package:gimnasio/src/domain/dialogs.dart';
 import 'package:gimnasio/src/domain/model/CardTag.dart';
 import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/domain/model/User.dart';
