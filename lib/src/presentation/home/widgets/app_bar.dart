@@ -36,12 +36,32 @@ class AppBarHome extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        ButtonNotification(
-            labelCount: 10,
-            iconColor: Theme.of(context).hintColor,
-            //  labelColor: Theme.of(context).accentColor),
-            labelColor: AppColors.buttonColor.withOpacity(0.9)),
-        Container(
+        if (appHome.user != null && appHome.user.rol == "ADMIN") ...{
+          ButtonNotification(
+              labelCount: 10,
+              iconColor: Theme.of(context).hintColor,
+              //  labelColor: Theme.of(context).accentColor),
+              labelColor: AppColors.buttonColor.withOpacity(0.9)),
+        },
+        if (appHome.user != null && appHome.user.rol == "CLIENTE") ...{
+          Container(
+              width: 30,
+              height: 30,
+              margin: EdgeInsets.only(top: 12.5, bottom: 12.5, right: 20),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(300),
+                onTap: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      "/Login",
+                      (
+                        Route<dynamic> route,
+                      ) =>
+                          false);
+                },
+                child: Icon(Icons.close),
+              ))
+        }
+        /*  Container(
             width: 30,
             height: 30,
             margin: EdgeInsets.only(top: 12.5, bottom: 12.5, right: 20),
@@ -53,7 +73,7 @@ class AppBarHome extends StatelessWidget {
                   "https://w1.pngwing.com/pngs/177/316/png-transparent-mouse-computer-mouse-user-technical-support-car-computer-network-avatar-line.png",
                 ),
               ),
-            )),
+            )), */
       ],
     );
   }

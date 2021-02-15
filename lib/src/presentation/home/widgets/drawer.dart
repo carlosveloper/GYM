@@ -156,7 +156,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Orders', arguments: 0);
+              Navigator.of(context).pushNamed('/Notificacion', arguments: 0);
             },
             leading: Icon(
               UiIcons.bell,
@@ -166,7 +166,7 @@ class DrawerWidget extends StatelessWidget {
               "Notificaciones Plan",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            trailing: Chip(
+            /* trailing: Chip(
               padding: EdgeInsets.symmetric(horizontal: 5),
               backgroundColor: Colors.transparent,
               shape: StadiumBorder(
@@ -175,7 +175,7 @@ class DrawerWidget extends StatelessWidget {
                 '10',
                 style: TextStyle(color: Theme.of(context).focusColor),
               ),
-            ),
+            ), */
           ),
           ListTile(
             dense: true,

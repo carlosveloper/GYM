@@ -37,8 +37,10 @@ class HistorialTagPage extends StatelessWidget {
           ),
         ),
         body: StreamBuilder<QuerySnapshot>(
-            stream:
-                FirebaseFirestore.instance.collection("historial").snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection("historial")
+                .orderBy("fecha", descending: true)
+                .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData)

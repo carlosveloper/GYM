@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:gimnasio/src/data/datasource/api_repositoy_impl.dart';
 import 'package:gimnasio/src/domain/Global.dart';
 import 'package:gimnasio/src/domain/model/CardTag.dart';
@@ -12,10 +15,12 @@ import 'package:gimnasio/src/presentation/gym/gym.dart';
 import 'package:gimnasio/src/presentation/nutrition/nutrition.dart';
 import 'package:gimnasio/src/presentation/profile/profile.dart';
 import 'package:gimnasio/src/presentation/routine/routine.dart';
+import 'package:gimnasio/src/provider/FCMPushNotificationProvider.dart';
 
 class HomeProvider extends ApiRepositoryImpl with ChangeNotifier {
   var contextHome;
   int page = 0;
+  final pushProvider = new PushNotificationProvider();
 
   Usuario user;
   Medic userMedic;
@@ -32,6 +37,8 @@ class HomeProvider extends ApiRepositoryImpl with ChangeNotifier {
     GymPage(),
     ProfilePage()
   ];
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   load(context) async {
     contextHome = context;
@@ -64,6 +71,41 @@ class HomeProvider extends ApiRepositoryImpl with ChangeNotifier {
       }
       await obtenerTarjetasCliente();
     }
+    iniciarNotificaciones();
+    inicializoNotificacion();
+  }
+
+  iniciarNotificaciones() {
+    pushProvider.initNotifications(admin: true);
+    pushProvider.mensajes.listen((data) {
+      showNotification("Gym", data['notification']['body']);
+    });
+  }
+
+  void inicializoNotificacion() {
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSetttings = new InitializationSettings(android: android, iOS: iOS);
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
+  }
+
+  Future onSelectNotification(String payload) async {}
+
+  showNotification(String title, String body) async {
+    var android = new AndroidNotificationDetails(
+        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+        priority: Priority.high, importance: Importance.max);
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android: android, iOS: iOS);
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platform,
+      payload: body,
+    );
   }
 
   solicitudesAdmin() async {
@@ -141,5 +183,11 @@ class HomeProvider extends ApiRepositoryImpl with ChangeNotifier {
       routine: routine,
     ));
     listPage.add(ProfilePage());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pushProvider.dispose();
   }
 }

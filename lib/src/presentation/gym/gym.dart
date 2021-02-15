@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gimnasio/src/presentation/gym/card_Presentation.dart';
 
 class GymPage extends StatefulWidget {
   GymPageState createState() => GymPageState();
@@ -118,7 +120,7 @@ class GymPageState extends State<GymPage> {
                           style: TextStyle(fontSize: 15.0),
                         ),
                         Text(
-                          " Lunes - viernes 7:00 am a 21:30 pm -Sabados 9:00 am -16:00pm",
+                          " Lunes - Viernes 7:00 am a 21:30 pm ",
                           style: TextStyle(
                               fontSize: 15.0, fontWeight: FontWeight.bold),
                         ),
@@ -166,11 +168,29 @@ class GymPageState extends State<GymPage> {
                         SizedBox(
                           width: 5.0,
                         ),
-                        Text(
-                          '40 personas - por distanciamiento social actualmente 10',
-                          style: TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.bold),
-                        )
+                        StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection("aforo")
+                                .snapshots(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (!snapshot.hasData)
+                                return Center(
+                                    child:
+                                        new Text('Personas en el local 0/40'));
+                              else {
+                                var list = snapshot.data.docs;
+                                print("datos");
+                                return Text(
+                                  'Personas en el local ' +
+                                      list.length.toString() +
+                                      "/40",
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              }
+                            })
                       ],
                     ),
                     SizedBox(
@@ -288,6 +308,27 @@ class GymPageState extends State<GymPage> {
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    Divider(),
+                    Container(
+                        child: Text(
+                      'Promociones',
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
+                    SizedBox(
+                      height: 2.5,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: ImageCardWithInternal(
+                        duration: "",
+                        title: "Plan - \$60",
+                        image:
+                            "https://36580daefdd0e4c6740b-4fe617358557d0f7b1aac6516479e176.ssl.cf1.rackcdn.com/products/1223.2699.jpg",
                       ),
                     )
                   ],

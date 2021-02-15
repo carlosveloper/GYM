@@ -16,7 +16,7 @@ class ButtonNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        Navigator.of(context).pushNamed('/Gestion');
+        Navigator.of(context).pushNamed('/Notificacion');
       },
       child: Stack(
         alignment: AlignmentDirectional.topEnd,
