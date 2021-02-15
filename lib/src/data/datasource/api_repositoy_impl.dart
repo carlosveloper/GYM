@@ -8,9 +8,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
 import 'package:gimnasio/src/domain/model/CardTag.dart';
 import 'package:gimnasio/src/domain/model/HistorialTag.dart';
+import 'package:gimnasio/src/domain/model/Medic.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
+import 'package:gimnasio/src/domain/model/Peso.dart';
 import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/domain/model/Routine.dart';
+import 'package:gimnasio/src/domain/model/Salud.dart';
 import 'package:gimnasio/src/domain/model/User.dart';
 import 'package:gimnasio/src/domain/repository/api_repository.dart';
 
@@ -292,6 +295,12 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
           .collection("recargotarjeta")
           .doc(recarga.codigoTag)
           .update(recarga.toMap());
+
+      FirebaseFirestore.instance
+          .collection("planesActivado")
+          .doc()
+          .set(recarga.toMap());
+
       return Right(true);
     } on FirebaseAuthException catch (e) {
       print("falle---" + e.code);
@@ -309,6 +318,111 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
         historial.add(HistorialTag.fromMap(val.data()));
       }
       return Right(historial);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Salud>>> getAllSalud() async {
+    List<Salud> salud = [];
+    try {
+      QuerySnapshot value =
+          await FirebaseFirestore.instance.collection("salud").get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        salud.add(Salud.fromMap(val.data()));
+      }
+      return Right(salud);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Peso>>> getAllPeso() async {
+    List<Peso> pesos = [];
+    try {
+      QuerySnapshot value =
+          await FirebaseFirestore.instance.collection("peso").get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        pesos.add(Peso.fromMap(val.data()));
+      }
+      return Right(pesos);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> registerMedic(Medic user) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("medic")
+          .doc(user.correo)
+          .set(user.toMap());
+      print("registrado!");
+      return Right(true);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Medic>> getProfileMedic(String mail) async {
+    print("consulto");
+    Medic user;
+    try {
+      DocumentSnapshot value =
+          await FirebaseFirestore.instance.collection("medic").doc(mail).get();
+      if (value.exists) {
+        user = Medic.fromMap(value.data());
+        if (user != null) {
+          return Right(user);
+        }
+        return Left(ServerFailure(message: "falla inesperada"));
+      } else {
+        return Left(ServerFailure(message: "user no found"));
+      }
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Nutrition>>> getSaludNutrition(
+      String tipo) async {
+    List<Nutrition> alimentacion = [];
+    try {
+      QuerySnapshot value = await FirebaseFirestore.instance
+          .collection("alimentacion")
+          .where("salud", isEqualTo: tipo)
+          .get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        alimentacion.add(Nutrition.fromMap(val.data()));
+      }
+      return Right(alimentacion);
+    } on FirebaseAuthException catch (e) {
+      print("falle---" + e.code);
+      return Left(ServerFailure(message: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Routine>>> getSaludRoutine(String tipo) async {
+    List<Routine> routine = [];
+    try {
+      QuerySnapshot value = await FirebaseFirestore.instance
+          .collection("ejercicios")
+          .where("salud", isEqualTo: tipo)
+          .get();
+      for (QueryDocumentSnapshot val in value.docs) {
+        routine.add(Routine.fromMap(val.data()));
+      }
+      return Right(routine);
     } on FirebaseAuthException catch (e) {
       print("falle---" + e.code);
       return Left(ServerFailure(message: e.code));

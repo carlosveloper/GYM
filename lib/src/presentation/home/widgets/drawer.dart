@@ -91,14 +91,14 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Maps');
+              Navigator.of(context).pushNamed('/RegistroMedico');
             },
             leading: Icon(
               UiIcons.drug,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              "Datos Medicos",
+              "Registro Medicos",
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),

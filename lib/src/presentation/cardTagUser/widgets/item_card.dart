@@ -8,17 +8,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class ItemCardHistorialTag extends StatefulWidget {
+class ItemCardHistorialTagUser extends StatefulWidget {
   final HistorialTag miTarjeta;
-  const ItemCardHistorialTag({Key key, @required this.miTarjeta})
+  final Usuario selectedValue;
+
+  const ItemCardHistorialTagUser(
+      {Key key, @required this.miTarjeta, this.selectedValue})
       : super(key: key);
 
   @override
-  _ItemCardHistorialTagState createState() => _ItemCardHistorialTagState();
+  _ItemCardHistorialTagUserState createState() =>
+      _ItemCardHistorialTagUserState();
 }
 
-class _ItemCardHistorialTagState extends State<ItemCardHistorialTag> {
-  Usuario selectedValue;
+class _ItemCardHistorialTagUserState extends State<ItemCardHistorialTagUser> {
   bool _isInitialized; //This is the key
 
   @override
@@ -28,22 +31,6 @@ class _ItemCardHistorialTagState extends State<ItemCardHistorialTag> {
 
   @override
   Widget build(BuildContext context) {
-    HistorialTagProvider appCardTag = context.watch<HistorialTagProvider>();
-
-    if (this._isInitialized == null || !this._isInitialized) {
-      // Only execute once
-      // appHome.cargarParametrosGenerales();
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        selectedValue = appCardTag.buscarUsuario(widget.miTarjeta.codigoTag);
-        if (selectedValue != null) {
-          this._isInitialized = true;
-        }
-        if (mounted) {
-          setState(() {});
-        }
-      });
-    }
-
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       width: double.infinity,
@@ -94,22 +81,17 @@ class _ItemCardHistorialTagState extends State<ItemCardHistorialTag> {
                   Spacer(),
                   GestureDetector(
                     onTap: () async {},
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (selectedValue != null) ...[
-                          MyAvatar(
-                            size: 80,
-                            url: selectedValue.foto,
-                          ),
-                          Text(
-                            selectedValue.nombres,
-                            style: GoogleFonts.raleway(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                        ]
-                      ],
-                    ),
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      MyAvatar(
+                        size: 80,
+                        url: widget.selectedValue.foto,
+                      ),
+                      Text(
+                        widget.selectedValue.nombres,
+                        style: GoogleFonts.raleway(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                    ]),
                   )
                 ],
               ),

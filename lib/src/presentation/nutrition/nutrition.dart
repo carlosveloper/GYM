@@ -22,7 +22,7 @@ class NutritionPage extends StatelessWidget {
                 })
             : Container(
                 child: Center(
-                  child: Text("No existe recomendaciones"),
+                  child: Text("No existe recomendaciones por el momento"),
                 ),
               ));
   }

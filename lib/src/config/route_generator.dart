@@ -3,6 +3,7 @@ import 'package:gimnasio/src/presentation/historialTag/historial_tag.dart';
 import 'package:gimnasio/src/presentation/home/home.dart';
 import 'package:gimnasio/src/presentation/login/login_page.dart';
 import 'package:gimnasio/src/presentation/recargaTag/recargaCard_tag.dart';
+import 'package:gimnasio/src/presentation/registerMedico/register_medico.dart';
 import 'package:gimnasio/src/presentation/registerUser/register_user.dart';
 import 'package:gimnasio/src/presentation/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RecargaTagPage.init());
       case '/Historial':
         return MaterialPageRoute(builder: (_) => HistorialTagPage.init());
+      case '/RegistroMedico':
+        return MaterialPageRoute(builder: (_) => RegistroMedico.init());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

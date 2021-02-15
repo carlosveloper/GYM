@@ -15,9 +15,11 @@ class AppBarHome extends StatelessWidget {
     var appHome = context.watch<HomeProvider>();
     return AppBar(
       automaticallyImplyLeading: false,
-      leading: new IconButton(
-          icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
-          onPressed: onPressedDrawer),
+      leading: appHome.user != null && appHome.user.rol == "ADMIN"
+          ? IconButton(
+              icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
+              onPressed: onPressedDrawer)
+          : Container(),
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: Column(
@@ -33,11 +35,6 @@ class AppBarHome extends StatelessWidget {
           }
         ],
       ),
-
-      /* Text(
-        "Home",
-        style: Theme.of(context).textTheme.headline4,
-      ), */
       actions: <Widget>[
         ButtonNotification(
             labelCount: 10,

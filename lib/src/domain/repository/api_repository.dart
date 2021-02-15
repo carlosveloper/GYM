@@ -5,9 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gimnasio/src/domain/exception/Failure.dart';
 import 'package:gimnasio/src/domain/model/CardTag.dart';
 import 'package:gimnasio/src/domain/model/HistorialTag.dart';
+import 'package:gimnasio/src/domain/model/Medic.dart';
 import 'package:gimnasio/src/domain/model/Nutrition.dart';
+import 'package:gimnasio/src/domain/model/Peso.dart';
 import 'package:gimnasio/src/domain/model/RecargaTag.dart';
 import 'package:gimnasio/src/domain/model/Routine.dart';
+import 'package:gimnasio/src/domain/model/Salud.dart';
 import 'package:gimnasio/src/domain/model/User.dart';
 
 abstract class ApiRepositoryInterface {
@@ -39,4 +42,15 @@ abstract class ApiRepositoryInterface {
   Future<Either<Failure, bool>> updateRecargaTag(RecargaTag recarga);
 
   Future<Either<Failure, List<HistorialTag>>> getAllHistorialTag();
+
+  Future<Either<Failure, List<Salud>>> getAllSalud();
+  Future<Either<Failure, List<Peso>>> getAllPeso();
+
+  Future<Either<Failure, bool>> registerMedic(Medic user);
+
+  Future<Either<Failure, Medic>> getProfileMedic(String mail);
+
+  Future<Either<Failure, List<Nutrition>>> getSaludNutrition(String tipo);
+
+  Future<Either<Failure, List<Routine>>> getSaludRoutine(String tipo);
 }

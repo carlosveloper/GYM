@@ -47,7 +47,9 @@ class _HomePageState extends State<HomePage> {
             },
           )),
       backgroundColor: Colors.grey[300],
-      drawer: DrawerWidget(),
+      drawer: (appHome.user != null && appHome.user.rol == "ADMIN")
+          ? DrawerWidget()
+          : Container(),
       body: appHome.listPage[appHome.page],
 
       /*   NutritionPage(
