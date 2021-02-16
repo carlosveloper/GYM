@@ -188,7 +188,7 @@ class DrawerWidget extends StatelessWidget {
               //color: Theme.of(context).focusColor.withOpacity(0.3),
             ),
           ),
-          ListTile(
+          /* ListTile(
             onTap: () {
               Navigator.of(context).pushNamed('/Help');
             },
@@ -200,8 +200,8 @@ class DrawerWidget extends StatelessWidget {
               "Ayuda y Soporte",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-          ),
-          ListTile(
+          ), */
+          /*  ListTile(
             onTap: () {
               Navigator.of(context).pushNamed('/Tabs', arguments: 1);
             },
@@ -213,7 +213,7 @@ class DrawerWidget extends StatelessWidget {
               "Configuraciones",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-          ),
+          ), */
           ListTile(
             onTap: () async {
               /*    final provider = context.read<UserProvider>();

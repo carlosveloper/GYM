@@ -23,6 +23,9 @@ class LoginBloc with Validators {
   String get email => _emailController.value;
   String get password => _passwordController.value;
 
+  Stream<bool> get formValidCambio => CombineLatestStream.combine2(
+      _emailController, _emailController, (e, p) => true);
+
   dispose() {
     _emailController?.close();
     _passwordController?.close();

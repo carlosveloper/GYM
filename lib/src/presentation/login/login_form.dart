@@ -106,28 +106,7 @@ class LoginForm extends StatelessWidget {
           /* SizedBox(
             height: responsive.ip(2),
           ), */
-          Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("No tienes una cuenta?",
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      color: AppColors.buttonBlueColors, fontSize: 20)),
-              CupertinoButton(
-                child: Text(
-                  "Registrate",
-                  overflow: TextOverflow.fade,
-                  style: GoogleFonts.aBeeZee(
-                    textStyle:
-                        TextStyle(fontSize: 20.0, color: AppColors.tituloCafe),
-                  ),
-                ),
-                onPressed: onGoToResgister,
-              )
-            ],
-          ),
+
           SizedBox(
             height: responsive.ip(2),
           ),

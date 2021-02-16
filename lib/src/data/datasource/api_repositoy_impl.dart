@@ -428,4 +428,31 @@ class ApiRepositoryImpl implements ApiRepositoryInterface {
       return Left(ServerFailure(message: e.code));
     }
   }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> recuperarContra(
+      String correo) async {
+    String errorMessage = "";
+    bool logeado = false;
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: correo);
+
+      return Right({'ok': true, 'token': errorMessage});
+    } catch (error) {
+      errorMessage = error.code;
+      /* switch (error.code) {
+        case "ERROR_USER_NOT_FOUND":
+          errorMessage = "Anonymous accounts are not enabled";
+          break;
+        case "ERROR_INVALID_EMAIL":
+          errorMessage = "Your email is invalid";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      } */
+    }
+    if (!logeado) {
+      return Left(ServerFailure(message: errorMessage));
+    }
+  }
 }

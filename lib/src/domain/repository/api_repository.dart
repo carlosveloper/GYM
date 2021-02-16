@@ -53,4 +53,6 @@ abstract class ApiRepositoryInterface {
   Future<Either<Failure, List<Nutrition>>> getSaludNutrition(String tipo);
 
   Future<Either<Failure, List<Routine>>> getSaludRoutine(String tipo);
+
+  Future<Either<Failure, Map<String, dynamic>>> recuperarContra(String correo);
 }

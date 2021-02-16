@@ -177,14 +177,14 @@ class GymPageState extends State<GymPage> {
                               if (!snapshot.hasData)
                                 return Center(
                                     child:
-                                        new Text('Personas en el local 0/40'));
+                                        new Text('Personas en el local 0/10'));
                               else {
                                 var list = snapshot.data.docs;
                                 print("datos");
                                 return Text(
                                   'Personas en el local ' +
                                       list.length.toString() +
-                                      "/40",
+                                      "/10",
                                   style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),

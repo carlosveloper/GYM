@@ -26,6 +26,18 @@ class MapScreenState extends State<ProfilePage>
     ..text = Global.miPerfil.correo;
   TextEditingController telefonoController = TextEditingController()
     ..text = Global.miPerfil.celular;
+
+  TextEditingController pesoController = TextEditingController()
+    ..text = Global.userMedic != null ? Global.userMedic.peso.toString() : "";
+
+  TextEditingController alturaController = TextEditingController()
+    ..text = Global.userMedic != null ? Global.userMedic.altura.toString() : "";
+
+  TextEditingController edadController = TextEditingController()
+    ..text = Global.userMedic != null ? Global.userMedic.edad.toString() : "";
+
+  TextEditingController saludController = TextEditingController()
+    ..text = Global.userMedic != null ? Global.userMedic.salud.toString() : "";
   Country _selected;
 
   void encontrarBandera() {
@@ -314,6 +326,92 @@ class MapScreenState extends State<ProfilePage>
                             ],
                           )),
                       _editext("Ingresa su Dirección", direccionController),
+                      if (Global.userMedic != null) ...[
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: new Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                new Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    new Text(
+                                      'Salud',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        _editext("Ingresa la  Salud", saludController),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: new Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                new Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    new Text(
+                                      'Peso',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        _editext("Ingresa el Peso", pesoController),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: new Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                new Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    new Text(
+                                      'Altura',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        _editext("Ingresa la  Altura", alturaController),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: new Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                new Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    new Text(
+                                      'Edad',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        _editext("Ingresa la  Edad", edadController),
+                      ],
                       !_status ? _getActionButtons() : new Container(),
                     ],
                   ),

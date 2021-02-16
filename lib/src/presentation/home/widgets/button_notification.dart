@@ -29,7 +29,7 @@ class ButtonNotification extends StatelessWidget {
               size: 28,
             ),
           ),
-          Container(
+          /*  Container(
             child: Center(
               child: Text(
                 this.labelCount.toString(),
@@ -47,7 +47,7 @@ class ButtonNotification extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10))),
             constraints: BoxConstraints(
                 minWidth: 15, maxWidth: 15, minHeight: 15, maxHeight: 15),
-          ),
+          ), */
         ],
       ),
       color: Colors.transparent,
