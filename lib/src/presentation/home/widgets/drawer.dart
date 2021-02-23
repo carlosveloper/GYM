@@ -156,6 +156,19 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
+              Navigator.of(context).pushNamed('/Ingresos', arguments: 0);
+            },
+            leading: Icon(
+              UiIcons.user_1,
+              color: Theme.of(context).focusColor.withOpacity(1),
+            ),
+            title: Text(
+              "Ingresos Hoy",
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          ListTile(
+            onTap: () {
               Navigator.of(context).pushNamed('/Notificacion', arguments: 0);
             },
             leading: Icon(

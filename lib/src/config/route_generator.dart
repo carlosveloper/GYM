@@ -1,6 +1,7 @@
 import 'package:gimnasio/src/presentation/cardTag/card_tag.dart';
 import 'package:gimnasio/src/presentation/historialTag/historial_tag.dart';
 import 'package:gimnasio/src/presentation/home/home.dart';
+import 'package:gimnasio/src/presentation/ingresos/ingresos_tag.dart';
 import 'package:gimnasio/src/presentation/login/login_page.dart';
 import 'package:gimnasio/src/presentation/notificacion/notificacion.dart';
 import 'package:gimnasio/src/presentation/recargaTag/recargaCard_tag.dart';
@@ -37,6 +38,9 @@ class RouteGenerator {
 
       case '/Notificacion':
         return MaterialPageRoute(builder: (_) => NotifiPage());
+
+      case '/Ingresos':
+        return MaterialPageRoute(builder: (_) => IngresosPage());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third
